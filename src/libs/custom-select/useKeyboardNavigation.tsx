@@ -2,6 +2,9 @@ import React, {useCallback} from 'react';
 import {Virtualizer} from '@tanstack/react-virtual';
 import {Option} from "./types.ts";
 
+/**
+ * Props for the keyboard navigation hook.
+ */
 interface UseKeyboardNavigationProps {
     isOpen: boolean;
     highlightedIndex: number | null;
@@ -13,6 +16,9 @@ interface UseKeyboardNavigationProps {
     setIsOpen: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
+/**
+ * Custom hook for handling keyboard navigation in a dropdown list.
+ */
 export const useKeyboardNavigation = ({
                                           isOpen,
                                           highlightedIndex,
@@ -25,18 +31,15 @@ export const useKeyboardNavigation = ({
                                       }: UseKeyboardNavigationProps) => {
     return useCallback(
         (e: KeyboardEvent) => {
-            if (!isOpen) {
-                if (['ArrowDown', 'ArrowUp', 'Enter'].includes(e.key)) {
-                    setIsOpen(true);
-                    e.preventDefault();
-                    return;
-                }
+            if (!isOpen && ['ArrowDown', 'ArrowUp', 'Enter'].includes(e.key)) {
+                setIsOpen(true);
+                e.preventDefault();
+                return;
             }
 
             const handleNavigation = (direction: 1 | -1) => {
-                const newIndex = highlightedIndex === null
-                    ? direction === 1 ? 0 : options.length - 1
-                    : Math.max(0, Math.min(options.length - 1, (highlightedIndex ?? 0) + direction));
+                const currentIndex = highlightedIndex ?? (direction === 1 ? -1 : options.length);
+                const newIndex = Math.max(0, Math.min(options.length - 1, currentIndex + direction));
                 rowVirtualizer.scrollToIndex(newIndex);
                 setHighlightedIndex(newIndex);
                 e.preventDefault();

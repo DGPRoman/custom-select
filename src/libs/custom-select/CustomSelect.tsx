@@ -1,17 +1,12 @@
 import React, {useState, useRef, useEffect, useCallback} from "react";
 import {useVirtualizer} from "@tanstack/react-virtual";
-import SimpleBar from "simplebar-react";
 import DropdownList from "./DropdownList.tsx";
-import "./select-styles.css";
-import "simplebar-react/dist/simplebar.min.css";
 import SelectTrigger from "./SelectTrigger.tsx";
 import {Option} from "./types.ts";
 import {useKeyboardNavigation} from "./useKeyboardNavigation.tsx";
 import {useDropdownHandlers} from "./useDropdownHandlers.tsx";
-
-interface SimpleBarWithScrollElement {
-    getScrollElement: () => HTMLElement;
-}
+import {SimpleBarWithScrollElement} from "./types.ts";
+import "./select-styles.css";
 
 interface SelectProps {
     options: Option[];
@@ -19,18 +14,20 @@ interface SelectProps {
     placeholder?: string;
 }
 
-const CustomSelect: React.FC<SelectProps> = ({options, onChange, placeholder = "Select your option"}) => {
+/**
+ * A custom select component that supports virtualization for performance with large lists.
+ */
+const CustomSelect: React.FC<SelectProps> = ({options, onChange, placeholder = "Select your option"}: SelectProps): React.ReactElement => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null);
     const [isFocused, setIsFocused] = useState(false);
 
     const selectRef = useRef<HTMLDivElement>(null);
-    const simpleBarRef = useRef<typeof SimpleBar & SimpleBarWithScrollElement>(null);
+    const simpleBarRef = useRef<SimpleBarWithScrollElement | null>(null);
 
     const handleFocus = useCallback(() => setIsFocused(true), []);
     const handleBlur = useCallback(() => setIsFocused(false), []);
-
 
     const rowVirtualizer = useVirtualizer({
         count: options.length,

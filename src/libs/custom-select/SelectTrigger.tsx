@@ -1,16 +1,19 @@
+import React from "react";
 import {Option} from "./types.ts";
 
-const SelectTrigger = ({
-                           isOpen,
-                           onClick,
-                           selectedOption,
-                           placeholder,
-                       }: {
+interface SelectTriggerProps {
     isOpen: boolean;
     onClick: () => void;
     selectedOption: Option | null;
     placeholder: string;
-}) => (
+}
+
+const SelectTrigger: React.FC<SelectTriggerProps> = ({
+                                                         isOpen,
+                                                         onClick,
+                                                         selectedOption,
+                                                         placeholder,
+                                                     }) => (
     <div
         className={`select-trigger ${isOpen ? "opened" : "closed"}`}
         onClick={onClick}
