@@ -1,8 +1,6 @@
 import {useEffect} from "react";
-import './App.css';
-import { useDataStore } from "./store/useDataStore";
+import {useDataStore} from "./store/useDataStore";
 import CustomSelectExample from "./components/CustomSelectExample.tsx";
-import NativeSelectExample from "./components/NativeSelectExample.tsx";
 
 
 function App() {
@@ -13,11 +11,8 @@ function App() {
     }, [fetchData]);
 
     return (
-        <>
-            <CustomSelectExample />
-            <NativeSelectExample />
-        </>
+        <CustomSelectExample/>
     )
 }
 
-export default App
+export default App;

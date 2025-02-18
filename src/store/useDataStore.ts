@@ -1,7 +1,14 @@
 import {create} from "zustand";
 import {api} from "../api/api";
-import {ResponseData} from "../types/data.ts";
 
+interface DataOption {
+    objectId: string;
+    Name: string;
+}
+
+export interface ResponseData {
+    results: DataOption[];
+}
 
 interface DataStore {
     data: ResponseData;

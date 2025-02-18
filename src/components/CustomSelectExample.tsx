@@ -1,17 +1,21 @@
-import { useDataStore } from "../store/useDataStore";
+import {useDataStore} from "../store/useDataStore";
+import CustomSelect from "../libs/custom-select/CustomSelect.tsx";
 
 const CustomSelectExample = () => {
-    const data= useDataStore(state => state.data);
+    const data = useDataStore(state => state.data);
+    const mappedOptions = [{value: '', label: "Select your option"}]
+    data.results.map(({objectId, Name}) => {
+        mappedOptions.push({value: objectId, label: Name});
+    })
+
+    const handleSelectChange = (selected: { value: string; label: string }) => {
+        console.log("Selected option:", selected);
+    };
 
     return (
         <>
             <h2>Custom select example</h2>
-            <div>Select your option</div>
-            <ul>
-                {data.results?.map((item) => (
-                    <li key={item.objectId}>{item.Name}</li>
-                ))}
-            </ul>
+            <CustomSelect options={mappedOptions} onChange={handleSelectChange}/>
         </>
     )
 }
