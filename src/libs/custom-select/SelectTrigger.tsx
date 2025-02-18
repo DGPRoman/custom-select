@@ -5,14 +5,12 @@ interface SelectTriggerProps {
     isOpen: boolean;
     onClick: () => void;
     selectedOption: Option | null;
-    placeholder: string;
 }
 
 const SelectTrigger: React.FC<SelectTriggerProps> = ({
                                                          isOpen,
                                                          onClick,
                                                          selectedOption,
-                                                         placeholder,
                                                      }) => (
     <div
         className={`select-trigger ${isOpen ? "opened" : "closed"}`}
@@ -22,7 +20,7 @@ const SelectTrigger: React.FC<SelectTriggerProps> = ({
         aria-haspopup="listbox"
         tabIndex={0}
     >
-        {selectedOption ? selectedOption.label : placeholder}
+        {selectedOption ? selectedOption.label : ''}
     </div>
 );
 

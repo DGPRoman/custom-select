@@ -56,6 +56,7 @@
     width: 100%;
     max-height: var(--dropdown-height);
     background: white;
+    z-index: 10;
 }
 
 .dropdown-list {
@@ -88,4 +89,11 @@
 .simplebar-content-wrapper {
     border: 1px solid var(--border-color);
     border-radius: var(--border-radius);
+}
+
+.loading {
+    margin: 0;
+    padding: 0;
+    height: 40px;
+    line-height: 40px;
 }

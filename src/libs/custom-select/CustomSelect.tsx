@@ -11,13 +11,13 @@ import "./select-styles.css";
 interface SelectProps {
     options: Option[];
     onChange?: (selected: Option) => void;
-    placeholder?: string;
+    selected?: Option;
 }
 
 /**
  * A custom select component that supports virtualization for performance with large lists.
  */
-const CustomSelect: React.FC<SelectProps> = ({options, onChange, placeholder = "Select your option"}: SelectProps): React.ReactElement => {
+const CustomSelect: React.FC<SelectProps> = ({options, onChange, selected}: SelectProps): React.ReactElement => {
     const [isOpen, setIsOpen] = useState(false);
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
     const [highlightedIndex, setHighlightedIndex] = useState<number | null>(null);
@@ -60,6 +60,13 @@ const CustomSelect: React.FC<SelectProps> = ({options, onChange, placeholder = "
     });
 
     useEffect(() => {
+        if (selected) {
+            const index = options.findIndex(option => option.value === selected.value);
+            setSelectedIndex(index !== -1 ? index : null);
+        }
+    }, [selected, options]);
+
+    useEffect(() => {
         if (isOpen) {
             rowVirtualizer.measure();
         }
@@ -100,7 +107,7 @@ const CustomSelect: React.FC<SelectProps> = ({options, onChange, placeholder = "
         }
     }, [isOpen, selectedIndex]);
 
-    const selectedOption = selectedIndex !== null ? options[selectedIndex] : null;
+    const selectedOption = selectedIndex !== null ? options[selectedIndex] : options[0];
 
     return (
         <div className="select-container" ref={selectRef} onFocus={handleFocus} onBlur={handleBlur}>
@@ -108,7 +115,6 @@ const CustomSelect: React.FC<SelectProps> = ({options, onChange, placeholder = "
                 isOpen={isOpen}
                 onClick={toggleDropdown}
                 selectedOption={selectedOption}
-                placeholder={placeholder}
             />
             {isOpen && (
                 <DropdownList

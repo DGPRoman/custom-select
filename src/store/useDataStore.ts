@@ -36,7 +36,6 @@ export const useDataStore = create<DataStore>((set) => ({
             const response = await api.get<ResponseData>("/classes/Complete_List_Names?keys=Name");
             // Transform API data into options for the CustomSelect
             const mappedOptions: Option[] = [
-                { value: '', label: "Select your option" },
                 ...response.data.results.map(({ objectId, Name }) => ({
                     value: objectId,
                     label: Name
