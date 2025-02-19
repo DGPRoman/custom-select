@@ -3,7 +3,7 @@
 **Custom Select** is a React component designed to provide a more flexible and styled selection experience compared to standard HTML `<select>`.
 
 ## Installation
-### 1. **Clone the repository (if you have access):**
+### 1. **Clone the repository:**
 
 ```git clone https://github.com/DGPRoman/custom-select```
 
